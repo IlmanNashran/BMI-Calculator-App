@@ -13,6 +13,7 @@ class BmiPage extends StatefulWidget {
 
 class _BmiPageState extends State<BmiPage> {
   double? _deviceHeight, _deviceWidth;
+  int _age = 25;
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +26,64 @@ class _BmiPageState extends State<BmiPage> {
         child: InfoCard(
           width: _deviceWidth! * 0.45,
           height: _deviceHeight! * 0.20,
-          child: Container(),
+          child: _ageSelectContainer(),
         ),
       ),
     ));
+  }
+
+  Widget _ageSelectContainer() {
+    return InfoCard(
+      width: _deviceWidth! * 0.45,
+      height: _deviceHeight! * 0.20,
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const Text(
+            "Age Yr",
+            style: TextStyle(
+                color: Colors.black, fontSize: 15, fontWeight: FontWeight.w400),
+          ),
+          Text(
+            _age.toString(),
+            style: const TextStyle(
+                color: Colors.black, fontSize: 45, fontWeight: FontWeight.w700),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 50,
+                child: CupertinoDialogAction(
+                  onPressed: () {
+                    setState(() {
+                      _age--;
+                    });
+                  },
+                  child: const Text('-'),
+                  textStyle: TextStyle(fontSize: 25, color: Colors.red),
+                ),
+              ),
+              SizedBox(
+                width: 50,
+                child: CupertinoDialogAction(
+                  onPressed: () {
+                    setState(() {
+                      _age++;
+                    });
+                  },
+                  child: const Text('+'),
+                  textStyle: TextStyle(fontSize: 25, color: Colors.blue),
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
   }
 }
