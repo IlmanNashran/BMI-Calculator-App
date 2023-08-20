@@ -13,7 +13,7 @@ class BmiPage extends StatefulWidget {
 
 class _BmiPageState extends State<BmiPage> {
   double? _deviceHeight, _deviceWidth;
-  int _age = 25, weight = 73;
+  int _age = 25, _weight = 73, _height = 70;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,8 @@ class _BmiPageState extends State<BmiPage> {
               _ageSelectContainer(),
               _weightSelectContainer(),
             ],
-          )
+          ),
+          _heightSelectContainer(),
         ],
       ),
     ));
@@ -112,7 +113,7 @@ class _BmiPageState extends State<BmiPage> {
                 color: Colors.black, fontSize: 15, fontWeight: FontWeight.w400),
           ),
           Text(
-            _age.toString(),
+            _weight.toString(),
             style: const TextStyle(
                 color: Colors.black, fontSize: 45, fontWeight: FontWeight.w700),
           ),
@@ -126,7 +127,7 @@ class _BmiPageState extends State<BmiPage> {
                 child: CupertinoDialogAction(
                   onPressed: () {
                     setState(() {
-                      weight--;
+                      _weight--;
                     });
                   },
                   child: const Text('-'),
@@ -137,15 +138,49 @@ class _BmiPageState extends State<BmiPage> {
                 width: 50,
                 child: CupertinoDialogAction(
                   onPressed: () {
-                    setState(() {
-                      weight++;
-                    });
+                    setState(
+                      () {
+                        _weight++;
+                      },
+                    );
                   },
-                  child: const Text('+'),
+                  child: Text('+'),
                   textStyle: TextStyle(fontSize: 25, color: Colors.blue),
                 ),
               ),
             ],
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _heightSelectContainer() {
+    return InfoCard(
+      height: _deviceHeight! * 0.15,
+      width: _deviceWidth! * 0.90,
+      child: Column(
+        children: [
+          const Text(
+            "height in",
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
+          ),
+          Text(
+            _height.toString(),
+            style: TextStyle(fontSize: 45, fontWeight: FontWeight.w700),
+          ),
+          SizedBox(
+            width: _deviceWidth! * 0.80,
+            child: CupertinoSlider(
+                min: 0,
+                max: 96,
+                divisions: 96,
+                value: _height.toDouble(),
+                onChanged: (_value) {
+                  setState(() {
+                    _height = _value.toInt();
+                  });
+                }),
           )
         ],
       ),
