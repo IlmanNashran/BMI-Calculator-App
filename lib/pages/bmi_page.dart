@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bmi_app/widgets/info_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +15,7 @@ class BmiPage extends StatefulWidget {
 
 class _BmiPageState extends State<BmiPage> {
   double? _deviceHeight, _deviceWidth;
-  int _age = 25, _weight = 73, _height = 70;
+  int _age = 25, _weight = 73, _height = 70, _gender = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +40,8 @@ class _BmiPageState extends State<BmiPage> {
             ],
           ),
           _heightSelectContainer(),
+          _genderSelectContainer(),
+          _calculateBMIButton(),
         ],
       ),
     ));
@@ -183,6 +187,50 @@ class _BmiPageState extends State<BmiPage> {
                 }),
           )
         ],
+      ),
+    );
+  }
+
+  Widget _genderSelectContainer() {
+    return InfoCard(
+      height: _deviceHeight! * 0.11,
+      width: _deviceWidth! * 0.90,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const Text(
+            'Gender',
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
+          ),
+          CupertinoSlidingSegmentedControl(
+              groupValue: _gender,
+              children: const {
+                0: Text('Male'),
+                1: Text('Female'),
+              },
+              onValueChanged: (_value) {
+                setState(() {
+                  _gender = _value as int; //cast in int
+                });
+              }),
+        ],
+      ),
+    );
+  }
+
+  Widget _calculateBMIButton() {
+    return Container(
+      height: _deviceHeight! * 0.07,
+      child: CupertinoButton.filled(
+        child: const Text("Calculate BMI"),
+        onPressed: () {
+          if (_height > 0 && _weight > 0 && _age > 0) {
+            double _bmi = 703 * (_weight / pow(_height, 2));
+            print(_bmi);
+          }
+        },
       ),
     );
   }
