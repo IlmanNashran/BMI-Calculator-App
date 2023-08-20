@@ -12,8 +12,9 @@ class _HistoryPageState extends State<HistoryPage> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-        child: Container(
-      color: const Color.fromARGB(255, 142, 128, 128),
-    ));git
+      child: Container(
+        color: const Color.fromARGB(255, 142, 128, 128),
+      ),
+    );
   }
 }
