@@ -228,10 +228,43 @@ class _BmiPageState extends State<BmiPage> {
         onPressed: () {
           if (_height > 0 && _weight > 0 && _age > 0) {
             double _bmi = 703 * (_weight / pow(_height, 2));
-            print(_bmi);
+            _showResultDialog(_bmi);
           }
         },
       ),
+    );
+  }
+
+  //show result popup
+  void _showResultDialog(double _bmi) {
+    String? _status;
+    if (_bmi < 18.5) {
+      _status = "Underweight";
+    } else if (_bmi >= 18.5 && _bmi < 25) {
+      _status = "normal";
+    } else if (_bmi >= 25 && _bmi < 30) {
+      _status = "overweight";
+    } else if (_bmi >= 30) {
+      _status = "obesity";
+    }
+    showCupertinoDialog(
+      context: context,
+      builder: (BuildContext _context) {
+        return CupertinoAlertDialog(
+          title: Text(_status!),
+          content: Text(
+            _bmi.toStringAsFixed(2),
+          ),
+          actions: [
+            CupertinoDialogAction(
+              child: Text('ok'),
+              onPressed: () {
+                Navigator.pop(_context);
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
