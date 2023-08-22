@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:bmi_app/utils/calculator.dart';
 import 'package:bmi_app/widgets/info_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class BmiPage extends StatefulWidget {
 
 class _BmiPageState extends State<BmiPage> {
   double? _deviceHeight, _deviceWidth;
-  int _age = 25, _weight = 73, _height = 70, _gender = 0;
+  int _age = 25, _weight = 73, _height = 140, _gender = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -167,7 +168,7 @@ class _BmiPageState extends State<BmiPage> {
       child: Column(
         children: [
           const Text(
-            "height in",
+            "height in cm",
             style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
           ),
           Text(
@@ -177,9 +178,9 @@ class _BmiPageState extends State<BmiPage> {
           SizedBox(
             width: _deviceWidth! * 0.80,
             child: CupertinoSlider(
-                min: 0,
-                max: 96,
-                divisions: 96,
+                min: 100,
+                max: 200,
+                divisions: 200,
                 value: _height.toDouble(),
                 onChanged: (_value) {
                   setState(() {
@@ -228,7 +229,7 @@ class _BmiPageState extends State<BmiPage> {
         child: const Text("Calculate BMI"),
         onPressed: () {
           if (_height > 0 && _weight > 0 && _age > 0) {
-            double _bmi = 703 * (_weight / pow(_height, 2));
+            double _bmi = calculateBMI(_height, _weight);
             _showResultDialog(_bmi);
           }
         },
